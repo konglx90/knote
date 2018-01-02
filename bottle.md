@@ -1,4 +1,4 @@
-# bottle
+## bottle
 
 - 一个文件的框架bottle.py.
 - 路由、模板、网络处理、服务器
@@ -100,7 +100,7 @@ app = Bottle()
 setup_routing(app)
 ```
 
-#### 请求方法 
+#### 请求方法
 @route装饰器默认是HTTP请求里的get请求
 
 ```
@@ -144,7 +144,7 @@ def error404(error):
 
 
 **Dictionaries**
-As mentioned above, Python dictionaries (or subclasses thereof) are automatically transformed **into JSON strings** and returned to the browser with the **Content-Type** header set to **application/json**. 
+As mentioned above, Python dictionaries (or subclasses thereof) are automatically transformed **into JSON strings** and returned to the browser with the **Content-Type** header set to **application/json**.
 **Empty Strings, False, None or other non-true values**:
 These produce an empty output with the **Content-Length** header set to *0*.
 **Unicode strings**
@@ -163,7 +163,7 @@ You are allowed to use yield within your callbacks or return an iterable, as lon
 可以直接返回文件对象， 默认分配一个对应的mime-type...
 下面是bottle框架为你做的
 ```
-It automatically guesses a mime-type, adds a Last-Modified header, restricts paths to a root directory for security reasons and generates appropriate error responses (403 on permission errors, 404 on missing files). It even supports the If-Modified-Since header and eventually generates a 304 Not Modified response. 
+It automatically guesses a mime-type, adds a Last-Modified header, restricts paths to a root directory for security reasons and generates appropriate error responses (403 on permission errors, 404 on missing files). It even supports the If-Modified-Since header and eventually generates a 304 Not Modified response.
 ```
 
 其中有些参数可以自己指定
@@ -279,7 +279,7 @@ def do_upload():
         name, ext = os.path.splitext(upload.filename)
         if ext not in ('.png','.jpg','.jpeg'):
             return 'File extension not allowed.'
-        
+
         upload.save(STATIC_PATH) # appends upload.filename automatically
         return 'OK'
     else:
@@ -290,7 +290,7 @@ def do_upload():
                 </form>'''
 ```
 
-#### TODO 
+#### TODO
 >WSGI ENVIRONMENT
 Each BaseRequest instance wraps a WSGI environment dictionary. The original is stored in BaseRequest.environ, but the request object itself behaves like a dictionary, too. Most of the interesting data is exposed through special methods or attributes, but if you want to access WSGI environ variables directly, you can do so:
 ```
@@ -484,4 +484,3 @@ def change_dbfile(db):
     sqlite.dbfile = '/tmp/%s.db' % db
     return "Switched DB to %s.db" % db
 ```
-
