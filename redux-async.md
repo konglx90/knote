@@ -1,4 +1,4 @@
-```
+```js
 export const actRequestNeedLogin = (data) => (dispatch, getState) => {
     const {
         fetch,
