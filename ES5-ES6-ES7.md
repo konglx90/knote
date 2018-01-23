@@ -397,4 +397,92 @@ run(function*() {
     console.log("Done");
 });
 
+
+// *** use promise ***
+
+let fs = require("fs");
+
+function run(taskDef) {
+
+    // create the iterator
+    let task = taskDef();
+
+    // start the task
+    let result = task.next();
+
+    // recursive function to iterate through
+    (function step() {
+
+        // if there's more to do
+        if (!result.done) {
+
+            // resolve to a promise to make it easy
+            let promise = Promise.resolve(result.value);
+            promise.then(function(value) {
+                result = task.next(value);
+                step();
+            }).catch(function(error) {
+                result = task.throw(error);
+                step();
+            });
+        }
+    }());
+}
+
+// Define a function to use with the task runner
+
+function readFile(filename) {
+    return new Promise(function(resolve, reject) {
+        fs.readFile(filename, function(err, contents) {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(contents);
+            }
+        });
+    });
+}
+
+// Run a task
+
+run(function*() {
+    let contents = yield readFile("config.json");
+    doSomethingWith(contents);
+    console.log("Done");
+});
+
+```
+
+#### Validating Function Parameters With Proxy
+
+```js
+// adds together all arguments
+function sum(...values) {
+    return values.reduce((previous, current) => previous + current, 0);
+}
+
+let sumProxy = new Proxy(sum, {
+        apply: function(trapTarget, thisArg, argumentList) {
+
+            argumentList.forEach((arg) => {
+                if (typeof arg !== "number") {
+                    throw new TypeError("All arguments must be numbers.");
+                }
+            });
+
+            return Reflect.apply(trapTarget, thisArg, argumentList);
+        },
+        construct: function(trapTarget, argumentList) {
+            throw new TypeError("This function can't be called with new.");
+        }
+    });
+
+console.log(sumProxy(1, 2, 3, 4));          // 10
+
+// throws error
+console.log(sumProxy(1, "2", 3, 4));
+
+// also throws error
+let result = new sumProxy();
+
 ```

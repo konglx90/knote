@@ -196,6 +196,150 @@ const ends = reduceArray(starts);
 
 ```
 
-### 正则表达式
+### ES6
 
-**#1**
+**#1** 举例说明rest和spread的用法
+
+```js
+// rest
+function pick(object, ...keys) {
+    let result = Object.create(null);
+
+    for (let i = 0, len = keys.length; i < len; i++) {
+        result[keys[i]] = object[keys[i]];
+    }
+
+    return result;
+}
+
+// Spread
+let values = [25, 50, 75, 100]
+
+console.log(Math.max.apply(Math, values));  // 100
+
+// equivalent to
+// console.log(Math.max(25, 50, 75, 100));
+console.log(Math.max(...values));           // 100
+```
+
+**#2** Destructuring
+
+使用 Destructuring 语法，在指定位置添加合适代码，运行结果正确
+```js
+const x = {
+	y: {
+		z: 9
+	}
+};
+
+// code here
+const {y: {z: cool}} = x;
+
+console.log(cool); // => 9
+
+```
+
+**#3** 查看MDN Proxy文档实现下列功能
+
+[wiki](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy)
+```js
+var tree = Tree();
+tree.branch1.branch2.twig = "green";
+// tree => { branch1: { branch2: { twig: "green" } } }
+tree.branch1.branch3.twig = "yellow";
+// tree => { branch1: { branch2: { twig: "green" }, branch3: { twig: "yellow" }}}
+
+// answer
+function Tree() {
+	return new Proxy({}, handler);
+}
+var handler = {
+	get: function (target, key, receiver) {
+		if (!(key in target)) {
+			target[key] = Tree();  // 自动创建一个子树
+		}
+		return Reflect.get(target, key, receiver);
+	}
+};
+
+```
+
+### reduce
+
+**#1** 使用reduce得出数组中最大的数字
+
+手写加分，也可以用chrome dev tools 调试出来
+
+```js  
+var ratings = [2,3,1,4,5]; // => 5
+ratings.reduce((acc, curr) => acc > curr ? acc : curr);
+
+```
+
+**#2** 实现简单的compose
+
+```js
+// 这个只能处理单参数
+// 能使用 reduceRight 实现最好，也可以用其他方式实现
+const compose = (...fns) => x => fns.reduceRight((v, f) => f(v), x);
+
+// 菜菜的实现
+const compose = (...funcs) => {
+	let r;
+	return (x) => {
+		funcs.reverse().forEach((func,index)=>{
+			if (index === 0) {
+				r = func(x);
+			} else {
+				r = func(r);
+			}
+        })
+		return r;
+	}
+}
+
+// Redux 版
+function compose(...funcs) {
+  if (funcs.length === 0) {
+    return arg => arg
+  }
+
+  if (funcs.length === 1) {
+    return funcs[0]
+  }
+
+  const last = funcs[funcs.length - 1]
+  const rest = funcs.slice(0, -1)
+  return (...args) => rest.reduceRight((composed, f) => f(composed), last(...args))
+}
+```
+
+**#2.1** 题外话
+
+问实现过redux的中间件吗？实现过什么功能?
+
+**#3** 已知一种reduce的实现，请用该reduce实现filter
+
+```js
+filter(x > 0, [0, 1, -1]); // => [1]
+```
+
+
+```js
+const reduce = (reducer, initial, arr) => {
+  let acc = initial;
+  for (let i = 0, length = arr.length; i < length; i++) {
+    acc = reducer(acc, arr[i], i);  // have index
+  }
+  return acc;
+};
+
+reduce((acc, curr) => acc + curr, 0, [1,2,3]); // 6
+
+const filter = (
+ fn, arr
+) => reduce((acc, curr) => fn(curr) ?
+ acc.concat([curr]) :
+ acc, [], arr
+);
+```
