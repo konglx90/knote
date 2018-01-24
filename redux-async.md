@@ -42,7 +42,7 @@ dispatch(actRequestNeedLogin({
 }));
 ```
 
-```
+```js
 export const actRequestNeedLogin = (fetch, ...payload) => (dispatch, getState) => {
     if (typeof fetch !== 'function') {
         throw new Error('[actRequestNeedLogin] fetch must be function ');

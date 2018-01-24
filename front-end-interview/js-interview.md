@@ -343,3 +343,18 @@ const filter = (
  acc, [], arr
 );
 ```
+
+```js
+const mapReducer = (mapper) => (result, input) => {
+  return result.concat(mapper(input));
+};
+const filterReducer (predicate) => (result, input) => {
+  return predicate(input) ? result.concat(input) : result;
+};
+const personRequirements = (person) => ageAbove18(person)
+  && isFemale(person)
+  && livesInTheNetherlands(person);
+const output = bigCollectionOfData
+  .reduce(filterReducer(personRequirements), [])
+  .reduce(mapReducer(pickFullName), []);
+```
