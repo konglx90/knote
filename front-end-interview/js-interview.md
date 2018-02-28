@@ -343,3 +343,43 @@ const filter = (
  acc, [], arr
 );
 ```
+
+```js
+const mapReducer = (mapper) => (result, input) => {
+  return result.concat(mapper(input));
+};
+const filterReducer (predicate) => (result, input) => {
+  return predicate(input) ? result.concat(input) : result;
+};
+const personRequirements = (person) => ageAbove18(person)
+  && isFemale(person)
+  && livesInTheNetherlands(person);
+const output = bigCollectionOfData
+  .reduce(filterReducer(personRequirements), [])
+  .reduce(mapReducer(pickFullName), []);
+```
+
+### 正则表达式
+
+[wiki](https://github.com/zeeshanu/learn-regex/blob/master/README-cn.md)
+
+**#1** 按要求匹配出相应的字符串
+
+```js
+// numbers
+const str = 'My phone is 17866668888';
+const str = 'My phone is 17868989899';
+const str = 'My phone is 18789894991';
+```
+
+```js
+const re = /17866668888|17868989899|18789894991/;
+const re = /[0-9]{11}/;
+const re = /\d+/;
+```
+
+**#2** 将下列字符串转化成相应字符串
+
+```js
+
+```
