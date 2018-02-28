@@ -1,0 +1,42 @@
+<!doctype html>
+<html data-framework="vue">
+  <head>
+    <meta charset="utf-8">
+    <title>Answer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="main.css">
+    <style>[v-cloak] { display: none; }</style>
+  </head>
+  <body>
+    <section class="answer" v-cloak>
+      <h1>{{ title }}</h1>
+      <h2>{{ question }}</h2>
+      <ul class="options">
+        <li v-for="option in options">
+          {{ option }}
+        </li>
+      </ul>
+      <h3>知识图谱</h3>
+      <p class="konwledge">{{ knowledge }}</p>
+      <h3>百度决策</h3>
+      <ul>
+        <li v-for="ans in answers">
+          {{ ans[0] }} : {{ ans[1] }}
+        </li>
+        <li v-if="answers.length > 0" class="t-answer true">肯定答案(**)： {{ answers[0][0] }}</li>
+        <li v-if="answers.length > 0" class="f-answer">否定答案(&nbsp;&nbsp;&nbsp;)： {{ answers[2][0] }}</li>
+      </ul>
+    </section>
+    <footer class="info">
+      <p>Answer</p>
+      <p>Written by <a href="http://evanyou.me">kong</a></p>
+    </footer>
+
+    <script>
+    // for testing
+    if (navigator.userAgent.indexOf('PhantomJS') > -1) localStorage.clear()
+    </script>
+    <script src="//cdn.bootcss.com/vue/2.5.13/vue.min.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>
