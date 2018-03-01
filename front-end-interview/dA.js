@@ -3,32 +3,33 @@
  * "[a,[b],c]" => ['a', ['b'], 'c']
  */
 const formatStrToArray = (format) => {
-    const jsonStr = format.replace(/[^\[\],]/g, ($1) => {
+    const rmSpaceStr = format.split(/\s+/).join('');
+    const jsonStr = rmSpaceStr.replace(/[^\[\],]/g, ($1) => {
         return `"${$1}"`
     });
     return JSON.parse(jsonStr);
 }
 
-const S = (arr, formatArray, ans) => {
-    let C = [];
-	let D = [];
-    formatArray.forEach((a, index) => {
-        if (Array.isArray(a)) {
-            C = C.concat(a);
-			D = D.concat(arr[index]);
-        } else {
-            ans[a] = arr[index];
-        }
-    });
-    if (C.length > 0) {
-        S(D, C, ans);
-    }
-}
+// const S = (arr, formatArray, ans) => {
+//     let C = [];
+// 	let D = [];
+//     formatArray.forEach((a, index) => {
+//         if (Array.isArray(a)) {
+//             C = C.concat(a);
+// 			D = D.concat(arr[index]);
+//         } else {
+//             ans[a] = arr[index];
+//         }
+//     });
+//     if (C.length > 0) {
+//         S(D, C, ans);
+//     }
+// }
 
-const S1 = (arr, formatArray, ans) => {
+const S = (arr, formatArray, ans) => {
     formatArray.forEach((a, index) => {
         if (Array.isArray(a)) {
-			S1(arr[index], formatArray[index], ans);
+    			S(arr[index], formatArray[index], ans);
         } else {
             ans[a] = arr[index];
         }

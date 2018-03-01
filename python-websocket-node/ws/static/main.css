@@ -1,0 +1,12 @@
+ul {
+  padding: 0;
+}
+
+li {
+  list-style-type: none;
+}
+
+.true {
+  color: #eee;
+  background-color: black;
+}
