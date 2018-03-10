@@ -378,8 +378,45 @@ const re = /[0-9]{11}/;
 const re = /\d+/;
 ```
 
-**#2** 将下列字符串转化成相应字符串
+### JavaScript基础 - 数据类型
+
+**#1** 下列代码运行结果
 
 ```js
+var s = 'ok';
+s.len = 'yes';
+var t = s.len;
+console.log(t); // undefined
+```
+
+### JavaScript基础 - 运算 - 左值优先
+
+**#1** 下列代码运行结果
+
+```js
+var a = 1;
+var b = (a++) + a;
+
+// 三个运算符 = ++ +
+
+// 1) 计算 b
+// 2) 计算 a++ 返回 1 #取名为c
+// 3) 计算 a 返回 2
+// 4) 计算 c + a 返回 3
+
+```
+
+### JavaScript基础 - 变量提升
+
+```js
+var name = 'World!';
+(function () {
+    if (typeof name === 'undefined') {
+        var name = 'Jack';
+        console.log('Goodbye ' + name);
+    } else {
+        console.log('Hello ' + name);
+    }
+})();
 
 ```
