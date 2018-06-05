@@ -1,6 +1,6 @@
 ### React
 
-1. 严格来讲，React 是专注与View的库
+1. 严格来讲，React 是专注于View的库
 
 2. App <=> Virtual DOM <=> DOM
 
