@@ -307,7 +307,7 @@ var http = new XMLHttpRequest();
 http.open('GET', '/foo');
 http.send();
 
-// or high API onload
+// or high API onload onload
 http.onreadystatechange = function () {
   console.log(http.readyState);
   console.log(http.status);
@@ -407,3 +407,90 @@ class Tabs extends Component {
 </details>
 
 #### 实现一个简单的类似redux中间件通过next机制执行
+
+<details>
+<summary>Answer</summary>
+
+```js
+// 模拟 redux 的 next 机制
+
+/**
+ * 1. 中间件依次执行
+ * 2. 调用next执行下个中间件
+ */
+
+function compose(...funcs) {
+    if (funcs.length === 0) {
+        return arg => arg;
+    }
+
+    if (funcs.length === 1) {
+        return funcs[0];
+    }
+
+    return funcs.reduce((a, b) => (...args) => a(b(...args)));
+}
+
+/**
+ * compose(f, g)(...arg)
+ * f(g(...arg))
+ */
+
+const log1 = next => action => {
+    console.log('log1:before', action);
+    next(action);
+    console.log('log1:after', action);
+}
+
+const log2 = next => action => {
+    console.log('log2:before', action);
+    next(action);
+    console.log('log2:after', action);
+}
+
+const middlewares = [ log1, log2 ];
+
+const next = compose(...middlewares);
+
+next(next)('do_it');
+
+```
+
+</details>
+
+#### 实现一个文件上传
+
+TODO
+
+#### 实现一个简单的事件订阅发布机制
+
+<details>
+<summary>Answer</summary>
+
+```js
+const Event = {
+  watchers: {},
+
+  subscribe(key, cb) {
+    if (this.watchers[key]) {
+      this.watchers[key].push(cb);
+    } else {
+      this.watchers[key] = [ cb ];
+    }
+  },
+
+  emit(key) {
+    if (this.watchers[key]) {
+      this.watchers[key].forEach(cb => cb(key));
+    }
+  }
+}
+
+Event.subscribe('click', () => { console.log('click1'); });
+Event.subscribe('click', () => { console.log('click2'); });
+
+Event.emit('click');
+
+```
+
+</details>
