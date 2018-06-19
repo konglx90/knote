@@ -420,3 +420,9 @@ var name = 'World!';
 })();
 
 ```
+
+### fetch
+
+[wiki](https://developer.mozilla.org/zh-CN/docs/Web/API/Fetch_API)
+
+[封装](./box/fetch.js)

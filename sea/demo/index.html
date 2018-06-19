@@ -26,11 +26,24 @@
             <div>inner</div>
         </div>
 
-        <script src="js/vendor/modernizr-{{MODERNIZR_VERSION}}.min.js"></script>
-        <script src="https://code.jquery.com/jquery-{{JQUERY_VERSION}}.min.js" integrity="{{JQUERY_SRI_HASH}}" crossorigin="anonymous"></script>
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-{{JQUERY_VERSION}}.min.js"><\/script>')</script>
-        <script src="js/plugins.js"></script>
-        <script src="js/main.js"></script>
+        <script>
+          var xmlhttp;
+          xmlhttp = new XMLHttpRequest();
+          xmlhttp.open('GET', 'https://pic.nanguazufang.cn/g3/0c/fa/6c61-eb79-4e50-b9f3-bdf812ef58f645', true);
+          xmlhttp.responseType = 'blob';
+          xmlhttp.onload = function() {
+              if (this.status == 200) {
+                  var blob = this.response;
+                  var img = document.createElement("img");
+                  img.onload = function(e) {
+                      window.URL.revokeObjectURL(img.src);
+                  };
+                  img.src = window.URL.createObjectURL(blob);
+                  document.body.appendChild(img);
+              }
+          }
+          xmlhttp.send();
+        </script>
 
         <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
         <script>
