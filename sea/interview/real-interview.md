@@ -574,3 +574,33 @@ TODO
 ### [一年-头条](https://juejin.im/post/5ae13cfe5188256715475806?utm_source=gold_browser_extension)
 
 #### inherit
+
+<details>
+<summary>Answer</summary>
+
+TODO MORE
+
+[js 继承](http://www.ruanyifeng.com/blog/2010/05/object-oriented_javascript_inheritance.html)
+
+```js
+function Foo() {}
+
+function Bar() {}
+
+// Bar.prototype = Object.create(Foo.prototype);
+
+function inherit(Child, Parent) {
+　　var F = function(){};
+　　F.prototype = Parent.prototype;
+　　Child.prototype = new F();
+　　Child.prototype.constructor = Child;
+// Child.uber = Parent.prototype;
+}
+
+function inherit(Child, Parent) {
+  Child.prototype = Object.create(Parent.prototype);
+}
+
+```
+
+</details>
