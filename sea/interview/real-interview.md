@@ -470,26 +470,44 @@ TODO
 ```js
 const Event = {
   watchers: {},
+  uid: 0,
 
   subscribe(key, cb) {
     if (this.watchers[key]) {
-      this.watchers[key].push(cb);
+      this.watchers[key].push({ uid: this.uid++, cb });
     } else {
-      this.watchers[key] = [ cb ];
+      this.watchers[key] = [ { uid: this.uid++, cb } ];
+    }
+
+    // unsubscribe
+    const that = this;
+    const fUid = that.uid - 1;
+    return function unsubscribe() {
+      if (!that.watchers[key]) {
+        return;
+      }
+      that.watchers[key].forEach(({ uid }, index) => {
+        if (uid === fUid) {
+          that.watchers[key].splice(index, 1);
+        }
+      })
     }
   },
 
   emit(key) {
     if (this.watchers[key]) {
-      this.watchers[key].forEach(cb => cb(key));
+      this.watchers[key].forEach(({ cb }) => cb(key));
     }
   }
 }
 
-Event.subscribe('click', () => { console.log('click1'); });
+var unsubscribe = Event.subscribe('click', () => { console.log('click1 unsbscribe'); });
 Event.subscribe('click', () => { console.log('click2'); });
 
+unsubscribe();
+
 Event.emit('click');
+
 
 ```
 
@@ -601,6 +619,33 @@ function inherit(Child, Parent) {
   Child.prototype = Object.create(Parent.prototype);
 }
 
+```
+
+```js
+function inherit(Child, Parent) {
+    Child.prototype = Object.create(Parent.prototype);
+    Child.prototype.constructor = Child;
+}
+function Base(a) {
+    this.a = a;
+}
+Base.prototype.getA = function() {
+    return this.a;
+}
+
+function Foo(a, b) {
+    Base.call(this, a);
+    this.b = b;
+}
+inherit(Foo, Base);
+Foo.prototype.getB = function() {
+    return this.b;
+}
+
+var foo = new Foo('aa', 'bb');
+
+console.log(foo.getA());
+console.log(foo.getB());
 ```
 
 </details>
