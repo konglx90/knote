@@ -494,3 +494,83 @@ Event.emit('click');
 ```
 
 </details>
+
+#### 软考 程序员 软件设计师 系统架构师 区别
+
+TODO
+
+#### 从头做一个项目的时候，如何设计，构思，有哪些步骤，从中长期目标来
+
+TODO
+
+### [一年-腾讯](https://juejin.im/post/5ae13cfe5188256715475806?utm_source=gold_browser_extension)
+
+#### CSS 盒模型
+
+由外到内 margin + border + padding + content 其中 content = width
+
+#### 圣杯布局
+
+TODO
+
+#### js原型链
+
+对象 原型对象 属性访问 继承
+
+#### 事件委托
+
+TODO
+
+#### 实现map函数
+
+<details>
+<summary>Answer</summary>
+
+```js
+function map(myArray, handler) {
+  const len = myArray.length;
+  const newArray = [];
+  for(let i=0; i<len; i++) {
+    newArray.push(handler(myArray[i]));
+  }
+  return newArray;
+}
+
+map([1, 2, 3], function(a) { return a * 2 });
+```
+
+</details>
+
+#### vue实现原理
+
+TODO
+
+#### react和vue的区别
+
+TODO
+
+#### http缓存
+
+TODO
+
+#### 性能优化
+
+TODO
+
+#### 站点安全
+
+TODO
+
+#### vue 和 react diff算法
+
+TODO
+
+#### https
+
+https所用的加密算法，ssl握手过程
+
+TODO
+
+### [一年-头条](https://juejin.im/post/5ae13cfe5188256715475806?utm_source=gold_browser_extension)
+
+#### inherit
