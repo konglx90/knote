@@ -649,3 +649,50 @@ console.log(foo.getB());
 ```
 
 </details>
+
+#### 手写实现以下事件委托函数
+
+<details>
+<summary>Answer</summary>
+
+```js
+// TODO
+function delegate(parent, selector, handle) {}
+```
+
+</details>
+
+#### 手写实现throttle函数
+
+TODO
+
+#### css实现自适应的正方形
+
+[wiki](https://blog.csdn.net/zhouziyu2011/article/details/70159209)
+
+#### 实现一个repeat函数
+
+<details>
+<summary>Answer</summary>
+
+```js
+function repeat(x, n) {
+	let rt = '';
+	for (let i of range(n)) {
+		rt = rt + x;
+	}
+	return rt;
+}
+
+function *range(n) {
+	let x = n;
+	while(x > 0) {
+		yield n - x
+		x--;
+	}
+}
+```
+
+</details>
+
+#### 请解释XSS与CSRF分别是什么，两者有什么联系？如何防御？
