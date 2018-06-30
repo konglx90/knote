@@ -426,3 +426,153 @@ var name = 'World!';
 [wiki](https://developer.mozilla.org/zh-CN/docs/Web/API/Fetch_API)
 
 [封装](./box/fetch.js)
+
+### How do you compare two objects in JavaScript?
+
+```js
+function isDeepEqual(obj1, obj2, testPrototypes = false) {
+  if (obj1 === obj2) {
+    return true
+  }
+
+  if (typeof obj1 === "function" && typeof obj2 === "function") {
+    return obj1.toString() === obj2.toString()
+  }
+
+  if (obj1 instanceof Date && obj2 instanceof Date) {
+    return obj1.getTime() === obj2.getTime()
+  }
+
+  const prototypesAreEqual = testPrototypes
+    ? isDeepEqual(
+        Object.getPrototypeOf(obj1),
+        Object.getPrototypeOf(obj2),
+        true
+      )
+    : true
+
+  const obj1Props = Object.getOwnPropertyNames(obj1)
+  const obj2Props = Object.getOwnPropertyNames(obj2)
+
+  return (
+    obj1Props.length === obj2Props.length &&
+    prototypesAreEqual &&
+    obj1Props.every(prop => isDeepEqual(obj1[prop], obj2[prop]))
+  )
+}
+```
+
+### What is a cross-site scripting attack (XSS) and how do you prevent it?
+
+XSS refers to client-side code injection where the attacker injects malicious scripts into a legitimate website or web application. This is often achieved when the application does not validate user input and freely injects dynamic HTML content.
+
+### Generate an array, containing the Fibonacci sequence, up until the nth term.
+
+```js
+const fibonacci = n =>
+  [...Array(n)].reduce(
+    (acc, val, i) => acc.concat(i > 1 ? acc[i - 1] + acc[i - 2] : i),
+    []
+  )
+```
+
+### Create a function that masks a string of characters with # except for the last four (4) characters.
+
+```js
+const mask = (str, maskChar = "#") =>
+  maskChar.repeat(str.slice(0, -4).length) + str.slice(-4);
+mask('123456'); // => '##3456'
+```
+
+### How do you clone an object in JavaScript?
+
+```js
+const obj = { a: 1, b: 2 }
+
+const deepClone = JSON.parse(JSON.stringify(obj));
+const shallowClone = { ...obj }
+const shallowClone = Object.assign({}, obj);
+const shallowClone = Object.keys(obj).reduce((acc, cur) => acc[cur] = obj[cur], {});
+
+```
+
+### Describe the different ways to create an object. When should certain ways be preferred over others?
+
+```js
+// Object literal
+const p = {
+	name: 'kong',
+	walk: () => {},
+};
+
+// Constructor
+function Person(name) {
+	this.name = name;
+}
+Person.prototype.walk = function() {}
+const p = new Person('kong');
+
+// Object.create
+const personProto = {
+	walk() {}
+}
+const p = Object.create(personProto);
+p.name = 'kong';
+
+// Factory function
+function createPerson(name) {
+	// pravite here
+	return {
+		name,
+		walk() {}
+	}
+}
+const p = createPerson('kong');
+```
+
+### What is memoization?
+
+```js
+const memoize = fn => {
+  const cache = new Map()
+  return value => {
+    const cachedResult = cache.get(value)
+    if (cachedResult !== undefined) return cachedResult
+    const result = fn(value)
+    cache.set(value, result)
+    return result
+  }
+}
+
+function fibonacci(n) {
+	if (n <= 1) return 1;
+	return fibonacci(n-1) + fibonacci(n-2);
+}
+const startTime = new Date().getTime();
+console.log(fibonacci(30));
+console.log(fibonacci(30));
+
+// const f = memoize(fibonacci);
+// f(30)
+// f(30)
+
+console.log(new Date().getTime() - startTime);
+
+memoize(fibonacci)(30);
+```
+
+### What is a closure? Can you give a useful example of one?
+
+A closure is a function defined inside another function and has access to its lexical scope even when it is executing outside its lexical scope. The closure has access to variables in three scopes:
+
+- Variables declared in its own scope
+- Variables declared in the scope of the parent function
+- Variables declared in the global scope
+
+In JavaScript, all functions are closures because they have access to the outer scope, but most functions don't utilise the usefulness of closures: the persistence of state. Closures are also sometimes called stateful functions because of this.
+
+In addition, closures are the only way to store private data that can't be accessed from the outside in JavaScript. They are the key to the UMD (Universal Module Definition) pattern, which is frequently used in libraries that only expose a public API but keep the implementation details private, preventing name collisions with other libraries or the user's own code.
+
+- Closures are useful because they let you associate data with a function that operates on that data.
+- A closure can substitute an object with only a single method.
+- Closures can be used to emulate private properties and methods.

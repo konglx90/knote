@@ -1,5 +1,8 @@
 // 模拟 redux 的 next 机制
 
+// const pipe = (...fns) => x => fns.reduce((v, fn) => fn(v), x)
+// const compose = (...fns) => x => fns.reduceRight((v, fn) => fn(v), x)
+
 function compose(...funcs) {
     if (funcs.length === 0) {
         return arg => arg;
