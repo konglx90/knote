@@ -596,6 +596,31 @@ TODO
 <details>
 <summary>Answer</summary>
 
+TODO MORE
+
+[js 继承](http://www.ruanyifeng.com/blog/2010/05/object-oriented_javascript_inheritance.html)
+
+```js
+function Foo() {}
+
+function Bar() {}
+
+// Bar.prototype = Object.create(Foo.prototype);
+
+function inherit(Child, Parent) {
+　　var F = function(){};
+　　F.prototype = Parent.prototype;
+　　Child.prototype = new F();
+　　Child.prototype.constructor = Child;
+// Child.uber = Parent.prototype;
+}
+
+function inherit(Child, Parent) {
+  Child.prototype = Object.create(Parent.prototype);
+}
+
+```
+
 ```js
 function inherit(Child, Parent) {
     Child.prototype = Object.create(Parent.prototype);
@@ -624,3 +649,50 @@ console.log(foo.getB());
 ```
 
 </details>
+
+#### 手写实现以下事件委托函数
+
+<details>
+<summary>Answer</summary>
+
+```js
+// TODO
+function delegate(parent, selector, handle) {}
+```
+
+</details>
+
+#### 手写实现throttle函数
+
+TODO
+
+#### css实现自适应的正方形
+
+[wiki](https://blog.csdn.net/zhouziyu2011/article/details/70159209)
+
+#### 实现一个repeat函数
+
+<details>
+<summary>Answer</summary>
+
+```js
+function repeat(x, n) {
+	let rt = '';
+	for (let i of range(n)) {
+		rt = rt + x;
+	}
+	return rt;
+}
+
+function *range(n) {
+	let x = n;
+	while(x > 0) {
+		yield n - x
+		x--;
+	}
+}
+```
+
+</details>
+
+#### 请解释XSS与CSRF分别是什么，两者有什么联系？如何防御？
