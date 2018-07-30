@@ -16,7 +16,7 @@ class Node {
 
 class BinaryTree {
   constructor(node) {
-    this.root = node;
+    this.root = node || null;
   }
 }
 
